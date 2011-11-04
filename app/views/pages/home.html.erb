@@ -1,2 +1,24 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Ingidio Email Address Generator</h1>
+<p>If you're going to use this to fill up your BCC chunk, please be aware the amount of calculation the server needs to do is porportional to n! where n is how many new pieces of information you need into the forms. For the sweet love of god, do NOT feed in too much information.</p>
+
+<%= form_tag("/", :method => "post") do %>
+  <%= label_tag(:firstname, "First name:") %>
+  <%= text_field_tag(:address, :firstname) %>
+  <%= label_tag(:middlename, "Middle name:") %>
+  <%= text_field_tag(:address, :middlename) %>
+  <%= label_tag(:lastname, "Last name:") %>
+  <%= text_field_tag(:address, :lastname) %>
+  <%= label_tag(:dates, "Dates:") %>
+  <%= text_field_tag(:address, :dates) %>
+  <%= label_tag(:domains) %>
+  <%= text_field_tag(:address, :domains) %>
+  <%= submit_tag("Generate") %>
+<% end %>
+
+<div class="address_output">
+  <p>
+    <% @addresses.each do |address| %>
+      <%= address %> , 
+    <% end %>
+  </p>
+</div>
