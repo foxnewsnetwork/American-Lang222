@@ -1,24 +1,27 @@
 <h1>Ingidio Email Address Generator</h1>
 <p>If you're going to use this to fill up your BCC chunk, please be aware the amount of calculation the server needs to do is porportional to n! where n is how many new pieces of information you need into the forms. For the sweet love of god, do NOT feed in too much information.</p>
 
+<p>You must fill in the domain field. You can put additional dates and domains, but besure to separate them with commas</p>
 <%= form_tag("/", :method => "post") do %>
   <%= label_tag(:firstname, "First name:") %>
-  <%= text_field_tag(:address, :firstname) %>
+  <%= text_field_tag("address[firstname]") %>
   <%= label_tag(:middlename, "Middle name:") %>
-  <%= text_field_tag(:address, :middlename) %>
+  <%= text_field_tag("address[middlename]") %>
   <%= label_tag(:lastname, "Last name:") %>
-  <%= text_field_tag(:address, :lastname) %>
+  <%= text_field_tag("address[lastname]") %>
   <%= label_tag(:dates, "Dates:") %>
-  <%= text_field_tag(:address, :dates) %>
+  <%= text_field_tag("address[dates]") %>
   <%= label_tag(:domains) %>
-  <%= text_field_tag(:address, :domains) %>
+  <%= text_field_tag("address[domains]") %>
   <%= submit_tag("Generate") %>
 <% end %>
 
 <div class="address_output">
+  <p><%= @addresses.count %> potential email addresses generated...</p>
   <p>
     <% @addresses.each do |address| %>
       <%= address %> , 
     <% end %>
   </p>
 </div>
+
