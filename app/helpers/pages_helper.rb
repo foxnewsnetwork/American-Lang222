@@ -4,6 +4,7 @@ module PagesHelper
   
   # dataset is an hash of known information about a person
   # Generates #n permutations that most likely will cover a given person's email
+
   def GenerateBCCField( dataset , limit = 300 )
     addresses = []
     
@@ -44,15 +45,38 @@ module PagesHelper
     dates = dataset[:dates] unless dataset[:dates].empty?
     nominal_addresses = Array.new(addresses)
     dates.each do |date|
-      year = "#{date.year}"[-2..-1]
-      monthday = "#{date.month}#{date.day}"
+      #if it's not just a year, process it as normal'
+      if date["month"] && date["day"]
+      year = "#{date["year"]}"[-2..-1]
+      monthday = "#{date["month"]}#{date["day"]}"
       lolcat = Array.new(nominal_addresses)
       happycat = Array.new(nominal_addresses)
+
+      #putting in a full year to addresses as well.
+      # I think it'd be common enough for people to put a full year in.'
+      fullyear = "#{date["year"]}"
+      additional_cat = Array.new(nominal_addresses)
       for k in 0..lolcat.count-1 do
         lolcat[k] += year
         happycat[k] += monthday
+        additional_cat[k] += fullyear
+      end
+      addresses += lolcat + happycat + additional_cat
+
+      #there is only a date. So process it as so
+      else
+       year = "#{date["year"]}"[-2..-1]
+       #also note the full year rather than the last two digits
+       fullyear = "#{date["year"]}"
+       lolcat = Array.new(nominal_addresses)
+      happycat = Array.new(nominal_addresses)
+      for k in 0..lolcat.count-1 do
+        lolcat[k] += year
+       #make it so addresses can have the full year
+        happycat[k] += fullyear
       end
       addresses += lolcat + happycat
+        end
     end
     
     # Set 5: attaching domains
@@ -86,4 +110,34 @@ module PagesHelper
     end
     return arr_out
   end
+
+  #Handle the entering of dates case by case.
+  def process_date(date)
+    #store our values in a hash, making it easier to access
+    date_hash = Hash.new
+     #if the date is only a year we'll process that
+    if date.length == 4
+      date_hash["year"] = "2011"
+
+    #otherwise we'll process it as a normal date.We assume normal date formatting'
+    else
+       separated_date = date.split("-")
+      date_hash["year"] = separated_date[0]
+       #case incase they forget that month should be before day.
+       #so if the "month" is greater than 12 we know the meant day instead
+       if separated_date[1].to_i >12
+         date_hash["month"] = separated_date[2].gsub("0","")
+      date_hash["day"] = separated_date[1].gsub("0","")
+       #else proceed as normal
+       else
+         date_hash["month"] = separated_date[1].gsub("0","")
+      date_hash["day"] = separated_date[2].gsub("0","")
+       end
+
+    end
+
+
+    return date_hash
+   end
+
 end

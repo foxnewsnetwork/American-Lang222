@@ -3,12 +3,14 @@ require 'date'
 class PagesController < ApplicationController
   def home
     @addresses = {}
-    unless params[:address].empty?
+    if params[:address]
       @s = params[:address]
       @s[:dates] = @s[:dates].split(',')
       unless @s[:dates].empty?
         for k in 0..@s[:dates].count-1 do
-          @s[:dates][k] = Date.parse(@s[:dates][k])
+          puts(@s[:dates][k])
+          processedDate = process_date(@s[:dates][k])
+          @s[:dates][k] = process_date(@s[:dates][k])
         end
       end
       @s[:domains] = @s[:domains].split(',')
