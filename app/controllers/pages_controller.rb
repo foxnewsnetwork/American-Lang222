@@ -3,11 +3,11 @@ require 'date'
 class PagesController < ApplicationController
   def home
     @addresses = {}
-<<<<<<< HEAD
+#<<<<<<< HEAD
     unless params[:address].nil?
-=======
-    if params[:address]
->>>>>>> 60d94af6fe7f08e4ad7c9f2df91079c4ba2d59b2
+#=======
+    #if params[:address]
+#>>>>>>> 60d94af6fe7f08e4ad7c9f2df91079c4ba2d59b2
       @s = params[:address]
       @s[:dates] = @s[:dates].split(',')
       unless @s[:dates].empty?
