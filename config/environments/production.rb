@@ -46,4 +46,24 @@ EmailGen::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+    # Only use best-standards-support built into browsers
+  config.action_dispatch.best_standards_support = :builtin
+  require 'tlsmail'
+  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address            => 'smtp.gmail.com',
+    :port               => 587,
+    :tls                  => true,
+    :domain             => 'gmail.com', #you can also use google.com
+    :authentication     => :plain,
+    :user_name          => 'ingidio.tv@gmail.com',
+    :password           => 'wtfisthisbullshit11'
+  }
+  # If you're reading this on github and lol-ing about how you found our password to our email just sitting there nicely labeled, we ask that you please don't ID-theft us. I mean, seriously, we're just a small start-up with 3 dudes who are stil struggling to finish school. We sustain ourselves largely on ramen and tap water while battling with technology we barely understand all in hopes that we can do something great for all the gamers out there. If you're a true hax0r, why not join us or at least hack someone else bigger (like Sony)
 end

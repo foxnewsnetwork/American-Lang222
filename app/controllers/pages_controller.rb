@@ -18,9 +18,10 @@ class PagesController < ApplicationController
           @addresses[k] = "#{@s[:firstname].capitalize} #{@s[:lastname].capitalize} <#{@addresses[k]}>" 
         end
       end
-      mail = UserMailer.welcome_email(@addresses)
-               mail.deliver()
-
+      content = "Temporary testing content here"
+      subject = "Temporary subject here"
+      mail = UserMailer.company_email(@addresses, content, subject)
+      mail.deliver()
     end
   end
 
@@ -28,6 +29,7 @@ class PagesController < ApplicationController
 
 
   end
+  
   def about
 
   end

@@ -37,5 +37,6 @@ ActionMailer::Base.smtp_settings = {
   :user_name          => 'ingidio.tv@gmail.com',
   :password           => 'wtfisthisbullshit11'
 }
+# If you're reading this on github and lol-ing about how you found our password to our email just sitting there nicely labeled, we ask that you please don't ID-theft us. I mean, seriously, we're just a small start-up with 3 dudes who are stil struggling to finish school. We sustain ourselves largely on ramen and tap water while battling with technology we barely understand all in hopes that we can do something great for all the gamers out there. If you're a true hax0r, why not join us or at least hack someone else bigger (like Sony)
 end
 
