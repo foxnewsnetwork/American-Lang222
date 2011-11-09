@@ -24,6 +24,9 @@
     <% @addresses.each do |address| %>
       <%= address %> , 
     <% end %>
+    <div id = "email">
+    <%= button_to "Send emails", pages_send_email_path()  %>
+        </div>
   </p>
 </div>
 

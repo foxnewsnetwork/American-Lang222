@@ -5,6 +5,8 @@ EmailGen::Application.routes.draw do
 
   get "pages/feedback"
 
+  post "pages/send_email"
+  match 'pages/send_email/' => 'pages#send_email'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
