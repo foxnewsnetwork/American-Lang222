@@ -15,5 +15,9 @@ doc/
 *~
 .project
 .DS_Store
+<<<<<<< HEAD
 .idea
 *.yml
+=======
+.idea/*
+>>>>>>> 74a85a59c9e06c57749190f60f518b615e49bf29

@@ -65,6 +65,7 @@ GEM
     rdoc (3.11)
       json (~> 1.4)
     thor (0.14.6)
+    tlsmail (0.0.1)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
@@ -76,3 +77,4 @@ PLATFORMS
 DEPENDENCIES
   mysql2 (~> 0.2.11)
   rails (= 3.0.10)
+  tlsmail (~> 0.0.1)

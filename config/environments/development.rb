@@ -15,12 +15,27 @@ EmailGen::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  require 'tlsmail'
+Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  :enable_starttls_auto => true,
+  :address            => 'smtp.gmail.com',
+  :port               => 587,
+  :tls                  => true,
+  :domain             => 'gmail.com', #you can also use google.com
+  :authentication     => :plain,
+  :user_name          => 'ingidio.tv@gmail.com',
+  :password           => 'wtfisthisbullshit11'
+}
 end
 
