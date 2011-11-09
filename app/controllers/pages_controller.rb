@@ -19,21 +19,17 @@ class PagesController < ApplicationController
           @addresses[k] = "#{@s[:firstname].capitalize} #{@s[:lastname].capitalize} <#{@addresses[k]}>" 
         end
       end
-      mail = UserMailer.welcome_email()
+      mail = UserMailer.welcome_email(@addresses)
                mail.deliver()
 
     end
   end
 
   def send_email
-    @addresses = params[:addresses]
-    mail = UserMailer.welcome_email()
-         mail.deliver()
+
 
   end
   def about
-    mail = UserMailer.welcome_email()
-         mail.deliver()
 
   end
 
