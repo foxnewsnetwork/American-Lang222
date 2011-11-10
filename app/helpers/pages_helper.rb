@@ -139,5 +139,21 @@ module PagesHelper
 
     return date_hash
    end
+  
+  # We ought to make additions to this function in the future so that we can handle more template usage 
+  def Process4Changes(content, dataset)
+    # update this hash in the future
+    change_flags = { "[NAME]" => [:firstname] , "[FULLNAME]" => [:firstname, :lastname]}
+    
+    # Please don't do something stupid like setting someone's first name to [FULLNAME] or something
+    change_flags.each do |key, value|
+      replacement_string = ''
+      value.each do |wolf|
+        replacement_string += dataset[wolf] + " "
+      end
+      content = content.gsub(key, replacement_string)
+    end
+    return content
+  end
 
 end

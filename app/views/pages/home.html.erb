@@ -2,6 +2,7 @@
 <p>If you're going to use this to fill up your BCC chunk, please be aware the amount of calculation the server needs to do is proportional to n! where n is how many new pieces of information you need into the forms. For the sweet love of god, do NOT feed in too much information.</p>
 
 <p>You must fill in the domain field. You can put additional dates and domains, but be sure to separate them with commas</p>
+<p>Input a custom email template into the content section complete with [NAME], etc. tags and they will be filled in appropriately</p>
 <%= form_tag("/", :method => "post") do %>
   <%= label_tag(:firstname, "First name:") %>
   <%= text_field_tag("address[firstname]") %>
@@ -13,6 +14,10 @@
   <%= text_field_tag("address[dates]") %>
   <%= label_tag(:domains) %>
   <%= text_field_tag("address[domains]") %>
+  <%= label_tag(:subject) %>
+  <%= text_field_tag("address[subject]", session[:subject]) %>
+  <%= label_tag(:content) %>
+  <%= text_area_tag("address[content]", session[:content]) %>
   <%= submit_tag("Generate") %>
 <% end %>
 <% if not flash[:notice].blank? %>
@@ -24,9 +29,23 @@
     <% @addresses.each do |address| %>
       <%= address %> , 
     <% end %>
-    <div id = "email">
-      <%= button_to "Send emails", pages_send_email_path()  %>
-    </div>
   </p>
 </div>
-
+<div class="email_output" >
+  <p>
+    <%= @email_subject %>
+  </p>
+  <p>
+    <%= @email_content %>
+  </p>
+</div>
+<div id = "email">
+  <%= button_to "Send emails", pages_send_email_path()  %>
+</div>
+<div id="sent_email">
+  <% unless flash[:success].nil? %>
+    <p class="out_email">
+      <%= flash[:success] %>
+    </p>
+  <% end %>
+</div>
