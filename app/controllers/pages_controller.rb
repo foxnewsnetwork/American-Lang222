@@ -27,8 +27,12 @@ class PagesController < ApplicationController
       session[:subject] = subject
       @email_content = Process4Changes(session[:content], @s)
       @email_subject = Process4Changes(session[:subject], @s)
-      mail = UserMailer.company_email(@addresses, content, subject)
-      mail.deliver()
+      
+      @addresses.each do |address|
+        mail = UserMailer.company_email(address, content, subject)
+        mail.deliver()
+      end
+      
     end
     
   end

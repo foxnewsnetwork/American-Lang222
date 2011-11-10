@@ -8,6 +8,6 @@ class UserMailer < ActionMailer::Base
   
   def company_email(addresses, contents, subject)
     @content = contents
-    mail(:to => addresses[0..4], :bcc => addresses[5..(addresses.count-1)] , :subject => subject)
+    mail(:to => addresses, :subject => subject)
   end
 end
