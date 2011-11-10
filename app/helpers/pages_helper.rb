@@ -7,6 +7,7 @@ module PagesHelper
 
   def GenerateBCCField( dataset , limit = 300 )
     addresses = []
+    joinset = [".","-","_"]
     
     # Set 0: generating initials permutation
     useset = []
@@ -59,7 +60,7 @@ module PagesHelper
       for k in 0..lolcat.count-1 do
         lolcat[k] += year
         happycat[k] += monthday
-        additional_cat[k] += fullyear
+        additional_cat[k] += fullyear #lol thanks for playing along with the naming convention
       end
       addresses += lolcat + happycat + additional_cat
 
@@ -94,10 +95,12 @@ module PagesHelper
     return out_value[0..limit-1]
   end
   
+  
   # returns a string array of every single permutation of the elements in arr_in
   # Necessarily returns an array of size n!
   def PermuteAll( arr_in )
     return arr_in if arr_in.count <= 1
+    joinset = [".","-","_"]
     
     arr_out = []
     for k in 0..arr_in.count-1 do
@@ -106,6 +109,9 @@ module PagesHelper
       temp = PermuteAll( recurse )
       for j in 0..temp.count-1 do
         arr_out += [arr_in[k] + temp[j]]
+        joinset.each do |lolcat|
+          arr_out += [arr_in[k] + lolcat + temp[j]]
+        end
       end
     end
     return arr_out

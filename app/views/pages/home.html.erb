@@ -18,7 +18,7 @@
   <%= text_field_tag("address[subject]", session[:subject]) %>
   <%= label_tag(:content) %>
   <%= text_area_tag("address[content]", session[:content]) %>
-  <%= submit_tag("Generate") %>
+  <%= submit_tag("Generate and Send") %>
 <% end %>
 <% if not flash[:notice].blank? %>
     <p class="notice"><%= notice %></p>
@@ -38,9 +38,6 @@
   <p>
     <%= @email_content %>
   </p>
-</div>
-<div id = "email">
-  <%= button_to "Send emails", pages_send_email_path()  %>
 </div>
 <div id="sent_email">
   <% unless flash[:success].nil? %>

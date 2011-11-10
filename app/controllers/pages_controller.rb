@@ -14,38 +14,27 @@ class PagesController < ApplicationController
       end
       @s[:domains] = @s[:domains].split(',')
       @addresses = GenerateBCCField(@s)
+      
       unless @s[:firstname].empty? || @s[:lastname].empty?
         for k in 0..(@addresses.count-1) do
-          @addresses[k] = "#{@s[:firstname].capitalize} #{@s[:lastname].capitalize} <#{@addresses[k]}>" 
+          @addresses[k] = "\"#{@s[:firstname].capitalize} #{@s[:lastname].capitalize}\" <#{@addresses[k]}>" 
         end
       end
       subject = @s[:subject].nil? ? "Temporary testing content here" : @s[:subject]
       content = @s[:content].nil? ? "Temporary subject here" : @s[:content]
       
-      session[:addresses] = @addresses
       session[:content] = content
       session[:subject] = subject
-      session[:dataset] = @s
-      @email_content = Process4Changes(session[:content], dataset)
-      @email_subject = Process4Changes(session[:subject], dataset)
+      @email_content = Process4Changes(session[:content], @s)
+      @email_subject = Process4Changes(session[:subject], @s)
+      mail = UserMailer.company_email(@addresses, content, subject)
+      mail.deliver()
     end
     
   end
 
   def send_email
-    if(session[:addresses].empty?)
-      flash[:notice] = "You fucking moron, you need to generate the emails first"
-    else
-      dataset = session[:dataset]
-      addresses = session[:addresses]
-      content = Process4Changes(session[:content], dataset)
-      subject = Process4Changes(session[:subject], dataset)
-      mail = UserMailer.company_email(addresses, content, subject)
-      mail.deliver()
-      session[:addresses] = []
-      flash[:success] = "#{subject}\n#{content}"
-    end
-    redirect_to("/")
+
   end
   
   def about
